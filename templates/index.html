@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Resume Parser</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Upload Resume (PDF)</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="resume" accept=".pdf" required>
+        <button type="submit">Parse</button>
+    </form>
+
+    {% if data %}
+        <h2>Parsed Information:</h2>
+        <ul>
+            <li><strong>Name:</strong> {{ data.Name }}</li>
+            <li><strong>Email:</strong> {{ data.Email }}</li>
+            <li><strong>Phone:</strong> {{ data.Phone }}</li>
+            <li><strong>Skills:</strong> {{ data.Skills | join(', ') }}</li>
+            <li><strong>Education:</strong> {{ data.Education }}</li>
+        </ul>
+    {% endif %}
+</body>
+</html>
