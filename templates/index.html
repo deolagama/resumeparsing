@@ -1,25 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Smart Resume Parser</title>
+    <meta charset="UTF-8">
+    <title>Resume Parser</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Upload Resume (PDF)</h1>
-    <form method="POST" enctype="multipart/form-data">
-        <input type="file" name="resume" accept=".pdf" required>
-        <button type="submit">Parse</button>
-    </form>
-
-    {% if data %}
-        <h2>Parsed Information:</h2>
-        <ul>
-            <li><strong>Name:</strong> {{ data.Name }}</li>
-            <li><strong>Email:</strong> {{ data.Email }}</li>
-            <li><strong>Phone:</strong> {{ data.Phone }}</li>
-            <li><strong>Skills:</strong> {{ data.Skills | join(', ') }}</li>
-            <li><strong>Education:</strong> {{ data.Education }}</li>
-        </ul>
-    {% endif %}
+    <div class="container">
+        <div class="top-half">
+            <div class="swipe-title">
+                <span>Swipe Right</span>
+                <span>On The Right Resume</span>
+            </div>
+        </div>
+        <div class="bottom-half">
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <label for="file-upload" class="custom-file-label">Choose File</label>
+                <input id="file-upload" type="file" name="file" accept="application/pdf" required onchange="document.getElementById('file-name').textContent = this.files[0]?.name || 'No file chosen'">
+                <span id="file-name" style="font-size:0.98rem;color:#205A28;">No file chosen</span>
+                <button type="submit">Upload Resume</button>
+            </form>
+            {% if parsed_data %}
+                <h2>Parsed Information</h2>
+                <ul>
+                    <li><strong>Name:</strong> {{ parsed_data.name }}</li>
+                    <li><strong>Email:</strong> {{ parsed_data.email }}</li>
+                    <li><strong>Phone:</strong> {{ parsed_data.phone }}</li>
+                    <li><strong>Skills:</strong> {{ parsed_data.skills | join(', ') }}</li>
+                    <li><strong>Education:</strong> {{ parsed_data.education }}</li>
+                </ul>
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>
